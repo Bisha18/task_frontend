@@ -1,0 +1,7 @@
+ @import "tailwindcss";
+
+ @import "tw-animate-css";
+
+body {
+  @apply bg-black text-white font-sans;
+}
