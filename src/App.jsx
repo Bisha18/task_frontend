@@ -15,7 +15,6 @@ import { format } from "date-fns";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-
 export default function App() {
   const [users, setUsers] = useState([]);
   const [selectedUserId, setSelectedUserId] = useState("");
@@ -29,7 +28,8 @@ export default function App() {
     fetchUsers();
     fetchClaimHistory();
 
-    const socket = io("https://task-i8y8.onrender.com");
+    // ✅ Updated socket URL
+    const socket = io("https://taskxp.onrender.com");
     socket.on("leaderboard_update", (updatedUsers) => {
       setUsers(updatedUsers);
       setMessage("Leaderboard updated!");
@@ -110,12 +110,16 @@ export default function App() {
   const rest = users.slice(3);
 
   const getRandomColor = () => {
-    return `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0')}`;
+    return `#${Math.floor(Math.random() * 16777215)
+      .toString(16)
+      .padStart(6, "0")}`;
   };
 
   return (
     <main className="max-w-3xl mx-auto py-6 px-4 min-h-screen bg-gray-900 text-white">
-      <h1 className="text-3xl font-bold text-center mb-6 text-white">Leaderboard</h1>
+      <h1 className="text-3xl font-bold text-center mb-6 text-white">
+        Leaderboard
+      </h1>
 
       {/* Controls */}
       <div className="flex flex-wrap items-center justify-center gap-4 mb-8">
@@ -140,7 +144,10 @@ export default function App() {
             ))}
           </SelectContent>
         </Select>
-        <Button onClick={handleClaimPoints} disabled={loading || !selectedUserId}>
+        <Button
+          onClick={handleClaimPoints}
+          disabled={loading || !selectedUserId}
+        >
           Claim Points
         </Button>
       </div>
@@ -156,13 +163,20 @@ export default function App() {
             const orders = [1, 0, 2];
             const rank = users.indexOf(user) + 1;
             return (
-              <div key={user._id} className={`flex flex-col items-center gap-2 order-${orders[index]}`}>
+              <div
+                key={user._id}
+                className={`flex flex-col items-center gap-2 order-${orders[index]}`}
+              >
                 <div
                   className="w-20 h-20 rounded-full border-4 flex items-center justify-center text-2xl font-bold text-black"
                   style={{
                     backgroundColor: getRandomColor(),
                     borderColor:
-                      rank === 1 ? '#FFD700' : rank === 2 ? '#C0C0C0' : '#CD7F32',
+                      rank === 1
+                        ? "#FFD700"
+                        : rank === 2
+                        ? "#C0C0C0"
+                        : "#CD7F32",
                   }}
                 >
                   {user.username[0].toUpperCase()}
@@ -183,9 +197,14 @@ export default function App() {
         {rest.map((user) => {
           const rank = users.indexOf(user) + 1;
           return (
-            <div key={user._id} className="flex justify-between items-center px-4 py-3">
+            <div
+              key={user._id}
+              className="flex justify-between items-center px-4 py-3"
+            >
               <div className="flex items-center gap-3">
-                <span className="text-lg font-bold text-gray-400">#{rank}</span>
+                <span className="text-lg font-bold text-gray-400">
+                  #{rank}
+                </span>
                 <div
                   className="w-10 h-10 rounded-full flex items-center justify-center font-semibold text-black"
                   style={{ backgroundColor: getRandomColor() }}
@@ -204,13 +223,18 @@ export default function App() {
 
       {/* Claim History */}
       <section className="mt-8 bg-gray-800 shadow rounded-lg px-4 py-6">
-        <h2 className="text-2xl font-bold text-center mb-4 text-white">Recent Claims</h2>
+        <h2 className="text-2xl font-bold text-center mb-4 text-white">
+          Recent Claims
+        </h2>
         {claimHistory.length === 0 ? (
           <p className="text-center text-gray-400">No claims recorded yet.</p>
         ) : (
           <div className="divide-y divide-gray-700">
             {claimHistory.map((claim) => (
-              <div key={claim._id} className="flex justify-between items-center py-3">
+              <div
+                key={claim._id}
+                className="flex justify-between items-center py-3"
+              >
                 <div className="flex items-center gap-2">
                   <span className="font-medium text-gray-100">
                     {claim.userId?.username || "Unknown User"}
