@@ -10,11 +10,11 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
-import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 
-const API_BASE_URL = "https://task-i8y8.onrender.com/api";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 
 export default function App() {
   const [users, setUsers] = useState([]);
